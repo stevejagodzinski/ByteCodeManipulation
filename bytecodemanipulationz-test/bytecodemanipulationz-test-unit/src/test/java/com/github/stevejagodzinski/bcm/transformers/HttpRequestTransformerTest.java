@@ -1,5 +1,9 @@
 package com.github.stevejagodzinski.bcm.transformers;
 
+import com.github.stevejagodzinski.bcm.agent.attach.AgentInstaller;
+import com.sun.tools.attach.AgentInitializationException;
+import com.sun.tools.attach.AgentLoadException;
+import com.sun.tools.attach.AttachNotSupportedException;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -25,14 +29,13 @@ public class HttpRequestTransformerTest {
     private static final Logger LOG = LoggerFactory.getLogger(HttpRequestTransformerTest.class);
 
     @Before
-    public void before() throws ClassNotFoundException {
+    public void before() throws AgentInitializationException, AgentLoadException, AttachNotSupportedException, IOException {
         installAgent();
     }
 
-    private void installAgent() throws ClassNotFoundException {
+    private void installAgent() throws AgentInitializationException, AgentLoadException, AttachNotSupportedException, IOException {
         // TODO: Not working
-        LOG.info("Installing Agent");
-        ClassLoader.getSystemClassLoader().loadClass("com.github.stevejagodzinski.bcm.JavaAgent");
+        AgentInstaller.INSTANCE.installAgent();
     }
 
     @Test
