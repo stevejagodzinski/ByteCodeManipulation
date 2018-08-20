@@ -9,8 +9,18 @@ import java.lang.instrument.Instrumentation;
 public class JavaAgent {
     private static final Logger LOG = LoggerFactory.getLogger(JavaAgent.class);
 
-    public static void premain(String agentArgs, Instrumentation inst) {
+    public static void premain(String agentArgs, Instrumentation instrumentation) {
+        LOG.info("Starting the agent from the command line.");
+        install(agentArgs, instrumentation);
+    }
+
+    public static void agentmain(String agentArgs, Instrumentation instrumentation) {
+        LOG.info("Agent stated after VM startup.");
+        install(agentArgs, instrumentation);
+    }
+
+    private static void install(String agentArgs, Instrumentation instrumentation) {
         LOG.info("Starting the agent with arguments {}", agentArgs);
-        inst.addTransformer(new HttpRequestTransformer());
+        instrumentation.addTransformer(new HttpRequestTransformer());
     }
 }
