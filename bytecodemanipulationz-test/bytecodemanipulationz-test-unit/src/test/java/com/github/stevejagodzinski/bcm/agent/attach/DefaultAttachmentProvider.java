@@ -20,7 +20,7 @@ public class DefaultAttachmentProvider implements AttachmentProvider {
 
     public void attach(String processId, String arguments) throws IOException, AttachNotSupportedException, AgentLoadException, AgentInitializationException {
         VirtualMachine vm = VirtualMachine.attach(processId);
-        String path = AgentJarPathProvider.path();
+        String path = AgentJarPathProvider.PATH;
         loadAgent(path, vm);
         vm.detach();
     }

@@ -23,7 +23,6 @@ import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 
-@Ignore("installAgent() is not working")
 public class HttpRequestTransformerTest {
 
     private static final Logger LOG = LoggerFactory.getLogger(HttpRequestTransformerTest.class);
@@ -34,11 +33,11 @@ public class HttpRequestTransformerTest {
     }
 
     private void installAgent() throws AgentInitializationException, AgentLoadException, AttachNotSupportedException, IOException {
-        // TODO: Not working
         AgentInstaller.INSTANCE.installAgent();
     }
 
     @Test
+    @Ignore("fix failing test")
     public void testInstrumentedServiceMethodAddsUniqueIdToResponse() throws ServletException, IOException {
         // Given I have some HTTP request
         HttpServletRequest request = mock(HttpServletRequest.class);
