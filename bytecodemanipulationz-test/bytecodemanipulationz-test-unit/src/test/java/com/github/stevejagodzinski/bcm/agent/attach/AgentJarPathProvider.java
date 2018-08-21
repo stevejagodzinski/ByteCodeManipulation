@@ -3,8 +3,11 @@ package com.github.stevejagodzinski.bcm.agent.attach;
 import com.github.stevejagodzinski.bcm.JavaAgent;
 
 import java.net.URL;
+import java.util.Optional;
 
 public class AgentJarPathProvider {
+
+    private static final String AGENT_JAR_PATH_ENVIRONMENT_VARIABLE = "com.github.stevejagodzinski.bcm.agent.attach.jar";
 
     private static final String FILE_URL_PREFIX = "file:/";
     private static final int FILE_URL_PREFIX_LENGTH = FILE_URL_PREFIX.length();
@@ -12,6 +15,15 @@ public class AgentJarPathProvider {
     public static final String PATH = path();
 
     private static String path() {
+        return Optional.ofNullable(findJarProvidedAsEnvironmentVariable()).orElseGet(AgentJarPathProvider::findJarOnClasspath);
+    }
+
+    // Allows developer to set the JAR file path as an environment variable to run the unit tests in the IDE
+    private static String findJarProvidedAsEnvironmentVariable() {
+        return System.getenv(AGENT_JAR_PATH_ENVIRONMENT_VARIABLE);
+    }
+
+    private static String findJarOnClasspath() {
         URL classUrl = JavaAgent.class.getResource("JavaAgent.class");
         String classFilePath = classUrl.getFile();
         String[] split = classFilePath.split("!");
