@@ -29,7 +29,7 @@ public class AgentJarPathProvider {
         String[] split = classFilePath.split("!");
 
         if (split.length != 2) {
-            throw new IllegalStateException("Can not determine jar file containing java agent");
+            throw new IllegalStateException("Can not determine jar file containing java agent: classFilePath=" + classFilePath);
         }
         String jarUrl = split[0];
 
