@@ -29,7 +29,7 @@
                             <arguments>
                                 <argument>-R</argument>
                                 <argument>o+x</argument>
-                                <argument>${project.basedir}/target/</argument>
+                                <argument>${project.basedir}/../../bytecodemanipulationz-agent/target/</argument>
                             </arguments>
                         </configuration>
                     </execution>
