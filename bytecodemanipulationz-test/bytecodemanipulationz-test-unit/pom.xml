@@ -29,7 +29,7 @@
                             <arguments>
                                 <argument>--format</argument>
                                 <argument>'%a'</argument>
-                                <argument>${project.basedir}/../../bytecodemanipulationz-agent/target/</argument>
+                                <argument>${project.basedir}/../../bytecodemanipulationz-agent/target/bytecodemanipulationz-agent-1.0-SNAPSHOT-jar-with-dependencies.jar</argument>
                             </arguments>
                         </configuration>
                     </execution>
