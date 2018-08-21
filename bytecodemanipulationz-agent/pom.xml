@@ -63,9 +63,9 @@
                         <configuration>
                             <executable>chmod</executable>
                             <arguments>
-                                <argument>+x</argument>
-                                <!--TODO: Parameterize-->
-                                <argument>${project.basedir}/target/bytecodemanipulationz-agent-1.0-SNAPSHOT-jar-with-dependencies.jar</argument>
+                                <argument>-R</argument>
+                                <argument>o+x</argument>
+                                <argument>${project.basedir}/target/</argument>
                             </arguments>
                         </configuration>
                     </execution>
