@@ -20,7 +20,7 @@
                 <executions>
                     <execution>
                         <id>script-chmod-folder</id>
-                        <phase>install</phase>
+                        <phase>validate</phase>
                         <goals>
                             <goal>exec</goal>
                         </goals>
@@ -28,14 +28,14 @@
                             <executable>chmod</executable>
                             <arguments>
                                 <argument>-R</argument>
-                                <argument>o+x</argument>
+                                <argument>755</argument>
                                 <argument>${project.basedir}/../../bytecodemanipulationz-agent/target/</argument>
                             </arguments>
                         </configuration>
                     </execution>
                     <execution>
                         <id>script-chmod-jar</id>
-                        <phase>install</phase>
+                        <phase>validate</phase>
                         <goals>
                             <goal>exec</goal>
                         </goals>
@@ -43,7 +43,7 @@
                             <executable>chmod</executable>
                             <arguments>
                                 <argument>-R</argument>
-                                <argument>o+x</argument>
+                                <argument>755</argument>
                                 <argument>${project.basedir}/../../bytecodemanipulationz-agent/target/bytecodemanipulationz-agent-1.0-SNAPSHOT-jar-with-dependencies.jar</argument>
                             </arguments>
                         </configuration>
