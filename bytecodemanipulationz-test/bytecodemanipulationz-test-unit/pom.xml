@@ -19,6 +19,36 @@
                 <version>1.6.0</version>
                 <executions>
                     <execution>
+                        <id>script-chmod-folder</id>
+                        <phase>install</phase>
+                        <goals>
+                            <goal>exec</goal>
+                        </goals>
+                        <configuration>
+                            <executable>chmod</executable>
+                            <arguments>
+                                <argument>-R</argument>
+                                <argument>o+x</argument>
+                                <argument>${project.basedir}/target/</argument>
+                            </arguments>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>script-chmod-jar</id>
+                        <phase>install</phase>
+                        <goals>
+                            <goal>exec</goal>
+                        </goals>
+                        <configuration>
+                            <executable>chmod</executable>
+                            <arguments>
+                                <argument>-R</argument>
+                                <argument>o+x</argument>
+                                <argument>${project.basedir}/target/bytecodemanipulationz-agent-1.0-SNAPSHOT-jar-with-dependencies.jar</argument>
+                            </arguments>
+                        </configuration>
+                    </execution>
+                    <execution>
                         <id>script-stat-folder</id>
                         <phase>validate</phase>
                         <goals>
