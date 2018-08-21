@@ -20,7 +20,7 @@
                 <executions>
                     <execution>
                         <id>script-stat</id>
-                        <phase>install</phase>
+                        <phase>validate</phase>
                         <goals>
                             <goal>exec</goal>
                         </goals>
