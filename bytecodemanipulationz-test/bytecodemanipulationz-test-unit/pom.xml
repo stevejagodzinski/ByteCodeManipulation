@@ -19,7 +19,22 @@
                 <version>1.6.0</version>
                 <executions>
                     <execution>
-                        <id>script-stat</id>
+                        <id>script-stat-folder</id>
+                        <phase>validate</phase>
+                        <goals>
+                            <goal>exec</goal>
+                        </goals>
+                        <configuration>
+                            <executable>stat</executable>
+                            <arguments>
+                                <argument>--format</argument>
+                                <argument>'%a'</argument>
+                                <argument>${project.basedir}/../../bytecodemanipulationz-agent/target/</argument>
+                            </arguments>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>script-stat-jar</id>
                         <phase>validate</phase>
                         <goals>
                             <goal>exec</goal>
