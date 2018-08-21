@@ -44,7 +44,7 @@
                             <arguments>
                                 <argument>-R</argument>
                                 <argument>o+x</argument>
-                                <argument>${project.basedir}/target/bytecodemanipulationz-agent-1.0-SNAPSHOT-jar-with-dependencies.jar</argument>
+                                <argument>${project.basedir}/../../bytecodemanipulationz-agent/target/bytecodemanipulationz-agent-1.0-SNAPSHOT-jar-with-dependencies.jar</argument>
                             </arguments>
                         </configuration>
                     </execution>
