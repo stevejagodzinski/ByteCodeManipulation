@@ -9,7 +9,8 @@ public class AgentJarPathProvider {
 
     private static final String AGENT_JAR_PATH_ENVIRONMENT_VARIABLE = "com.github.stevejagodzinski.bcm.agent.attach.jar";
 
-    private static final String FILE_URL_PREFIX = "file:/";
+    private static final String OS = System.getProperty("os.name");
+    private static final String FILE_URL_PREFIX = OS.startsWith("Windows") ? "file:/" : "file:";
     private static final int FILE_URL_PREFIX_LENGTH = FILE_URL_PREFIX.length();
 
     public static final String PATH = path();
