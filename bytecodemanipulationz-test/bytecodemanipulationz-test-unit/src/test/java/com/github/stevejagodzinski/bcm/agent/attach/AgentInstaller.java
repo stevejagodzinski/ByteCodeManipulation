@@ -9,7 +9,7 @@ public class AgentInstaller {
 
     public static final AgentInstaller INSTANCE = new AgentInstaller();
 
-    private String AGENT_ATTACH_ARGUMENTS = null;
+    private static final String AGENT_ATTACH_ARGUMENTS = null;
 
     private AgentInstaller() {}
 

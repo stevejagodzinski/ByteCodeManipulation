@@ -13,6 +13,10 @@ public class AgentJarPathProvider {
     private static final String FILE_URL_PREFIX = OS.startsWith("Windows") ? "file:/" : "file:";
     private static final int FILE_URL_PREFIX_LENGTH = FILE_URL_PREFIX.length();
 
+    private AgentJarPathProvider() {
+        throw new UnsupportedOperationException("Class with only static utility methods should not be instantiated");
+    }
+
     public static final String PATH = path();
 
     private static String path() {
