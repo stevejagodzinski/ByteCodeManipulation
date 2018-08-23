@@ -1,3 +1,8 @@
 language: java
 install: true
 script: mvn clean install -B
+addons:
+  sonarcloud:
+    organization: "stevejagodzinski-github"
+script:
+  - sonar-scanner
