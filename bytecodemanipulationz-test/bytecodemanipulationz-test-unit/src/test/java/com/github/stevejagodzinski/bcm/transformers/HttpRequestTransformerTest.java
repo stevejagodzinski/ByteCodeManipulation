@@ -1,6 +1,7 @@
 package com.github.stevejagodzinski.bcm.transformers;
 
 import com.github.stevejagodzinski.bcm.agent.attach.AgentInstaller;
+import com.github.stevejagodzinski.bcm.agent.attach.AttachException;
 import com.github.stevejagodzinski.bcm.servlet.NoOpHttpServlet;
 import com.sun.tools.attach.AgentInitializationException;
 import com.sun.tools.attach.AgentLoadException;
@@ -27,14 +28,12 @@ import static org.mockito.Mockito.when;
 
 public class HttpRequestTransformerTest {
 
-    private static final Logger LOG = LoggerFactory.getLogger(HttpRequestTransformerTest.class);
-
     @Before
-    public void before() throws AgentInitializationException, AgentLoadException, AttachNotSupportedException, IOException {
+    public void before() throws AttachException {
         installAgent();
     }
 
-    private void installAgent() throws AgentInitializationException, AgentLoadException, AttachNotSupportedException, IOException {
+    private void installAgent() throws AttachException {
         AgentInstaller.INSTANCE.installAgent();
     }
 

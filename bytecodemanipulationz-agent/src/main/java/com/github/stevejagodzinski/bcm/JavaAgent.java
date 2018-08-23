@@ -9,6 +9,10 @@ import java.lang.instrument.Instrumentation;
 public class JavaAgent {
     private static final Logger LOG = LoggerFactory.getLogger(JavaAgent.class);
 
+    private JavaAgent() {
+        throw new UnsupportedOperationException("Static premain/agentmain class should not be instantiated");
+    }
+
     public static void premain(String agentArgs, Instrumentation instrumentation) {
         LOG.info("Starting the agent from the command line.");
         install(agentArgs, instrumentation);
