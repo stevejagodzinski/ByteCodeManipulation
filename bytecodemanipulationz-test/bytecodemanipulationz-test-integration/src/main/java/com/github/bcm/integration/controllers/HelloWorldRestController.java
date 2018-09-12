@@ -11,27 +11,27 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-public class TestController {
+public class HelloWorldRestController {
 
-    private static final Logger LOG = LoggerFactory.getLogger(TestController.class);
+    private static final Logger LOG = LoggerFactory.getLogger(HelloWorldRestController.class);
 
-    @GetMapping("/test/time")
+    @GetMapping("/helloworld/time")
     public long getCurrentTimeMillis() {
         LOG.debug("getCurrentTimeMillis executed");
         return System.currentTimeMillis();
     }
 
-    @PutMapping("/test/test-put/{id}")
+    @PutMapping("/helloworld/test-put/{id}")
     public void testPut(@PathVariable String id) {
         LOG.debug("testPut executed with id={}", id);
     }
 
-    @PostMapping("/test/test-post")
+    @PostMapping("/helloworld/test-post")
     public void testPost(@RequestBody String body) {
         LOG.debug("testPost executed with body={}", body);
     }
 
-    @DeleteMapping("/test/test-delete/{id}")
+    @DeleteMapping("/helloworld/test-delete/{id}")
     public void testDelete(@PathVariable String id) {
         LOG.debug("testDelete executed with id={}", id);
     }
