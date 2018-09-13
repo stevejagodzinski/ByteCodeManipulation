@@ -15,10 +15,10 @@ public class HelloWorldRestController {
 
     private static final Logger LOG = LoggerFactory.getLogger(HelloWorldRestController.class);
 
-    @GetMapping("/helloworld/time")
-    public long getCurrentTimeMillis() {
+    @GetMapping("/helloworld")
+    public String getCurrentTimeMillis() {
         LOG.debug("getCurrentTimeMillis executed");
-        return System.currentTimeMillis();
+        return "Hello World";
     }
 
     @PutMapping("/helloworld/test-put/{id}")
