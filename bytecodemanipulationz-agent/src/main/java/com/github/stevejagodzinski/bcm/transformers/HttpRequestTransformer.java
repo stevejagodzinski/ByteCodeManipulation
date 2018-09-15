@@ -1,14 +1,15 @@
 package com.github.stevejagodzinski.bcm.transformers;
 
-import javassist.ByteArrayClassPath;
 import javassist.CannotCompileException;
 import javassist.ClassPool;
 import javassist.CtClass;
 import javassist.CtMethod;
+import javassist.LoaderClassPath;
 import javassist.NotFoundException;
 import javassist.bytecode.AccessFlag;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import java.lang.instrument.ClassFileTransformer;
 import java.security.ProtectionDomain;
 
@@ -24,9 +25,18 @@ public class HttpRequestTransformer implements ClassFileTransformer {
     public byte[] transform(ClassLoader loader, String className, Class<?> classBeingRedefined, ProtectionDomain protectionDomain, byte[] classfileBuffer) {
         byte[] transformed = null;
         try {
-            pool.insertClassPath(new ByteArrayClassPath(className, classfileBuffer));
+            //pool.insertClassPath(new ByteArrayClassPath(className, classfileBuffer));
 
-            if (className.equals(TARGET_CLASS_SLASH)) {
+
+
+            if (TARGET_CLASS_SLASH.equals(className)) {
+
+                final ClassLoader contextClassLoader = Thread.currentThread().getContextClassLoader();
+                if (contextClassLoader != null)
+                {
+                    pool.insertClassPath(new LoaderClassPath(contextClassLoader));
+                }
+
                 CtClass ctClass = pool.get(TARGET_CLASS_DOT);
                 LOG.info("Instrumenting the {} class", className);
                 if (!ctClass.isFrozen()) {
@@ -38,7 +48,7 @@ public class HttpRequestTransformer implements ClassFileTransformer {
                     LOG.error("Class has already been loaded or written out and thus it cannot be modified any more. className={}", className);
                 }
             } else {
-                LOG.debug("Class {} will not be instrumented", className);
+                LOG.trace("Class {} will not be instrumented", className);
             }
         } catch (NotFoundException e) {
             LOG.trace("Error transforming class", e);
