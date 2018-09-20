@@ -50,5 +50,6 @@ public class JavaAgent {
     private static void install(String agentArgs, Instrumentation instrumentation) {
         LOG.info("Starting the agent with arguments {}", agentArgs);
         instrumentation.addTransformer(new HttpRequestTransformer(), true);
+        LOG.info("Agent installation complete!");
     }
 }

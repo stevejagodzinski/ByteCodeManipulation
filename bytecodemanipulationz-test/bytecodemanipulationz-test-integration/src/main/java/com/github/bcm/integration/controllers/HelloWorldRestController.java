@@ -15,6 +15,14 @@ public class HelloWorldRestController {
 
     private static final Logger LOG = LoggerFactory.getLogger(HelloWorldRestController.class);
 
+    public HelloWorldRestController() {
+        logClassLoader();
+    }
+
+    private void logClassLoader() {
+        LOG.debug("Class loaded with {}", getClass().getClassLoader());
+    }
+
     @GetMapping("/helloworld")
     public String getCurrentTimeMillis() {
         LOG.debug("getCurrentTimeMillis executed");

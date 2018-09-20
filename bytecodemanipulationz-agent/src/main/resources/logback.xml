@@ -9,8 +9,22 @@
     </appender>
 
     <!-- TODO: Include FILE Appender -->
+    <property name="COM_GITHUB_STEVEJAGODZINSKI_BCM_LOG_FILE" value="logs/agent.log" />
+
+    <appender name="COM_GITHUB_STEVEJAGODZINSKI_BCM_FILE"
+              class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+        </encoder>
+        <file>${COM_GITHUB_STEVEJAGODZINSKI_BCM_LOG_FILE}</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <fileNamePattern>${COM_GITHUB_STEVEJAGODZINSKI_BCM_LOG_FILE}.%d{yyyy-MM-dd}.%i.gz</fileNamePattern>
+            <maxFileSize>50MB</maxFileSize>
+            <maxHistory>10</maxHistory>
+        </rollingPolicy>
+    </appender>
 
     <root level="debug">
-        <appender-ref ref="COM_GITHUB_STEVEJAGODZINSKI_BCM_STDOUT" />
+        <appender-ref ref="COM_GITHUB_STEVEJAGODZINSKI_BCM_FILE" />
     </root>
 </configuration>
