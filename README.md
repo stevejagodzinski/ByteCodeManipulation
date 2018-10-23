@@ -17,7 +17,7 @@
 * Computes the following data points:
   * Counts how many string objects were created for a single page request or RESTful request
   * Times the request from start to finish
-  * Counts how many classes a loaded during one request
+  * Counts how many classes are loaded during one request
 * Provides an interface that instruments the application to provide the computed data points to:
   * An endpoint
   * The console
