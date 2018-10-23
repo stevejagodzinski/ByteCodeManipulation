@@ -22,3 +22,15 @@
   * An endpoint
   * The console
   * A log file
+  
+## How to build
+Building with maven from the root project directory will build the agent and run all tests.
+
+```
+mvn clean install
+```
+
+The build will output the agent jar here:
+```
+./bytecodemanipulationz-agent/target/bytecodemanipulationz-agent-1.0-SNAPSHOT-jar-with-dependencies.jar
+```
