@@ -25,17 +25,10 @@ public class HttpRequestTransformer implements ClassFileTransformer {
     public byte[] transform(ClassLoader loader, String className, Class<?> classBeingRedefined, ProtectionDomain protectionDomain, byte[] classfileBuffer) {
         byte[] transformed = null;
         try {
-            //pool.insertClassPath(new ByteArrayClassPath(className, classfileBuffer));
-
-
-
             if (TARGET_CLASS_SLASH.equals(className)) {
 
-                final ClassLoader contextClassLoader = Thread.currentThread().getContextClassLoader();
-                if (contextClassLoader != null)
-                {
-                    pool.insertClassPath(new LoaderClassPath(contextClassLoader));
-                }
+                final ClassLoader contextClassLoader = getClassLoader();
+                pool.insertClassPath(new LoaderClassPath(contextClassLoader));
 
                 CtClass ctClass = pool.get(TARGET_CLASS_DOT);
                 LOG.info("Instrumenting the {} class", className);
@@ -69,11 +62,21 @@ public class HttpRequestTransformer implements ClassFileTransformer {
     }
 
     private void addUniqueIdToResponse(CtMethod serviceMethod) throws CannotCompileException {
-        serviceMethod.insertAfter(generateAddUniqueIdToResponseJavaCode());
+        serviceMethod.insertBefore(generateAddUniqueIdToResponseJavaCode());
     }
 
     private String generateAddUniqueIdToResponseJavaCode() {
         // TODO: Make key configurable
         return "$2.addHeader(\"X-SJ-UUID\", java.util.UUID.randomUUID().toString());";
+    }
+
+    private ClassLoader getClassLoader() {
+        ClassLoader contextClassLoader = Thread.currentThread().getContextClassLoader();
+
+        if (contextClassLoader == null) {
+            contextClassLoader = ClassLoader.getSystemClassLoader();
+        }
+
+        return contextClassLoader;
     }
 }
