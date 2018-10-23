@@ -27,8 +27,8 @@
                             <addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>
                         </manifest>
                         <manifestEntries>
-                            <Premain-Class>${agent.class}</Premain-Class>
-                            <Agent-Class>${agent.class}</Agent-Class>
+                            <Premain-Class>${com.github.stevejagodzinski.bcm.agent.class}</Premain-Class>
+                            <Agent-Class>${com.github.stevejagodzinski.bcm.agent.class}</Agent-Class>
                             <Permissions>all-permissions</Permissions>
                             <Can-Redefine-Classes>true</Can-Redefine-Classes>
                             <Can-Retransform-Classes>true</Can-Retransform-Classes>
@@ -71,6 +71,6 @@
     </dependencies>
 
     <properties>
-        <agent.class>com.github.stevejagodzinski.bcm.JavaAgent</agent.class>
+        <com.github.stevejagodzinski.bcm.agent.class>com.github.stevejagodzinski.bcm.JavaAgent</com.github.stevejagodzinski.bcm.agent.class>
     </properties>
 </project>
