@@ -39,7 +39,7 @@ The build will output the agent jar here:
 Attach the agent jar to your webapp when launching the webapp.
 Use the -javaagent JVM flag, passing the full path to the agent jar.
 
-##### For Example:
+#### For Example:
 
 A small spring boot app exists as part of the bytecodemanipulationz-test-integration project.
 
