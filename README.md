@@ -37,7 +37,7 @@ The build will output the agent jar here:
 
 ## How to deploy
 Attach the agent jar to your webapp when launching the webapp.
-Use the -javaagent JVM flag, passing the path to the agent jar.
+Use the -javaagent JVM flag, passing the full path to the agent jar.
 
 ##### For Example:
 
@@ -53,7 +53,7 @@ Normally you would launch this webapp using java -jar:
 java -jar ./bytecodemanipulationz-test/bytecodemanipulationz-test-integration/target/bytecodemanipulationz-test-integration-2.0.5.RELEASE.jar
 ```
 
-Here is how you would launch the spring boot webapp with the agent attached:
+Here is how you would launch the spring boot webapp with the agent attached (replacing $REPLACE_WITH_FULL_PATH with the full path to the agent jar):
 ```
-java -javaagent:./bytecodemanipulationz-agent/target/bytecodemanipulationz-agent-1.0-SNAPSHOT-jar-with-dependencies.jar -jar ./bytecodemanipulationz-test/bytecodemanipulationz-test-integration/target/bytecodemanipulationz-test-integration-2.0.5.RELEASE.jar
+java -javaagent:$REPLACE_WITH_FULL_PATH/bytecodemanipulationz-agent-1.0-SNAPSHOT-jar-with-dependencies.jar -jar ./bytecodemanipulationz-test/bytecodemanipulationz-test-integration/target/bytecodemanipulationz-test-integration-2.0.5.RELEASE.jar
 ```
