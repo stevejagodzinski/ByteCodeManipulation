@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -36,14 +37,69 @@ public class HelloWorldRestControllerTest {
         String body = response.getBody();
         assertThat(body).isEqualTo("Hello World");
 
-        HttpHeaders headers = response.getHeaders();
+        validateHeaders(response.getHeaders());
+    }
 
+    @Test
+    public void testPutHelloWorld() {
+        ResponseEntity<Void> response = this.restTemplate.exchange("/helloworld/test-put/123", HttpMethod.PUT, null, Void.class);
+
+        assertThat(response.getStatusCode()).isEqualByComparingTo(HttpStatus.OK);
+
+        validateHeaders(response.getHeaders());
+    }
+
+    @Test
+    public void testPostHelloWorld() {
+        ResponseEntity<Void> response = this.restTemplate.postForEntity("/helloworld/test-post", "postbody", Void.class);
+
+        assertThat(response.getStatusCode()).isEqualByComparingTo(HttpStatus.OK);
+
+        validateHeaders(response.getHeaders());
+    }
+
+    @Test
+    public void testDeleteHelloWorld() {
+        ResponseEntity<Void> response = this.restTemplate.exchange("/helloworld/test-delete/123", HttpMethod.DELETE, null, Void.class);
+
+        assertThat(response.getStatusCode()).isEqualByComparingTo(HttpStatus.OK);
+
+        validateHeaders(response.getHeaders());
+    }
+
+    @Test
+    //@Ignore("Failing")
+    public void testHeaderIsAddedWhenRequestIsBad() {
+        ResponseEntity<Void> response = this.restTemplate.postForEntity("/helloworld/test-post", null, Void.class);
+
+        assertThat(response.getStatusCode()).isEqualByComparingTo(HttpStatus.BAD_REQUEST);
+
+        validateHeaders(response.getHeaders());
+    }
+
+    @Test
+    public void testSeparateRequestsCreateUniqueIds() {
+        ResponseEntity<String> response1 = this.restTemplate.getForEntity("/helloworld", String.class);
+        ResponseEntity<String> response2 = this.restTemplate.getForEntity("/helloworld", String.class);
+
+        String uuid1 = validateHeaders(response1.getHeaders());
+        String uuid2 = validateHeaders(response2.getHeaders());
+
+        assertThat(uuid1).isNotEqualTo(uuid2);
+    }
+
+    private String validateHeaders(HttpHeaders headers) {
         LOG.debug("Http Headers={}", headers);
 
         assertThat(headers.containsKey("X-SJ-UUID")).isTrue();
         assertThat(headers.get("X-SJ-UUID")).isNotNull();
         assertThat(headers.get("X-SJ-UUID")).hasSize(1);
-        assertThat(headers.get("X-SJ-UUID").get(0)).satisfies(value -> Objects.requireNonNull(UUID.fromString(value)));
+
+        String uuid = headers.get("X-SJ-UUID").get(0);
+
+        assertThat(uuid).satisfies(value -> Objects.requireNonNull(UUID.fromString(value)));
+
+        return uuid;
     }
 
 }
