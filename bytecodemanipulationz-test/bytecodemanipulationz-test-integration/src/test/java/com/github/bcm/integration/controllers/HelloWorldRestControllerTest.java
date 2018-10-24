@@ -26,7 +26,7 @@ public class HelloWorldRestControllerTest {
     private static final Logger LOG  = LoggerFactory.getLogger(HelloWorldRestControllerTest.class);
 
     private static final String GET_URL = "/helloworld";
-    private static final String POST_URL = "/helloworld";
+    private static final String POST_URL = "/helloworld/test-post";
 
     @Autowired
     private TestRestTemplate restTemplate;
