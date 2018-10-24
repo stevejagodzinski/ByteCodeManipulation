@@ -25,12 +25,15 @@ public class HelloWorldRestControllerTest {
 
     private static final Logger LOG  = LoggerFactory.getLogger(HelloWorldRestControllerTest.class);
 
+    private static final String GET_URL = "/helloworld";
+    private static final String POST_URL = "/helloworld";
+
     @Autowired
     private TestRestTemplate restTemplate;
 
     @Test
     public void testGetHelloWorld() {
-        ResponseEntity<String> response = this.restTemplate.getForEntity("/helloworld", String.class);
+        ResponseEntity<String> response = this.restTemplate.getForEntity(GET_URL, String.class);
 
         assertThat(response.getStatusCode()).isEqualByComparingTo(HttpStatus.OK);
 
@@ -51,7 +54,7 @@ public class HelloWorldRestControllerTest {
 
     @Test
     public void testPostHelloWorld() {
-        ResponseEntity<Void> response = this.restTemplate.postForEntity("/helloworld/test-post", "postbody", Void.class);
+        ResponseEntity<Void> response = this.restTemplate.postForEntity(POST_URL, "postbody", Void.class);
 
         assertThat(response.getStatusCode()).isEqualByComparingTo(HttpStatus.OK);
 
@@ -70,7 +73,7 @@ public class HelloWorldRestControllerTest {
     @Test
     //@Ignore("Failing")
     public void testHeaderIsAddedWhenRequestIsBad() {
-        ResponseEntity<Void> response = this.restTemplate.postForEntity("/helloworld/test-post", null, Void.class);
+        ResponseEntity<Void> response = this.restTemplate.postForEntity(POST_URL, null, Void.class);
 
         assertThat(response.getStatusCode()).isEqualByComparingTo(HttpStatus.BAD_REQUEST);
 
@@ -79,8 +82,8 @@ public class HelloWorldRestControllerTest {
 
     @Test
     public void testSeparateRequestsCreateUniqueIds() {
-        ResponseEntity<String> response1 = this.restTemplate.getForEntity("/helloworld", String.class);
-        ResponseEntity<String> response2 = this.restTemplate.getForEntity("/helloworld", String.class);
+        ResponseEntity<String> response1 = this.restTemplate.getForEntity(GET_URL, String.class);
+        ResponseEntity<String> response2 = this.restTemplate.getForEntity(GET_URL, String.class);
 
         String uuid1 = validateHeaders(response1.getHeaders());
         String uuid2 = validateHeaders(response2.getHeaders());
@@ -95,6 +98,7 @@ public class HelloWorldRestControllerTest {
         assertThat(headers.get("X-SJ-UUID")).isNotNull();
         assertThat(headers.get("X-SJ-UUID")).hasSize(1);
 
+        @SuppressWarnings("ConstantConditions") // headers.get("X-SJ-UUID") can not be null... null check performed above
         String uuid = headers.get("X-SJ-UUID").get(0);
 
         assertThat(uuid).satisfies(value -> Objects.requireNonNull(UUID.fromString(value)));
