@@ -61,6 +61,5 @@ public class HttpRequestTransformer extends AbstractClassFileTransformer {
 
     private void addLocalRequestIdVariable(StringBuilder code) {
         code.append("java.util.UUID requestId = java.util.UUID.randomUUID();");
-        code.append("$2.addHeader(\"X-SJ-UUID\", requestId.toString());");
     }
 }

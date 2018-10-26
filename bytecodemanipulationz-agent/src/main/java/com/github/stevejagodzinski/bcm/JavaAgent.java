@@ -1,6 +1,7 @@
 package com.github.stevejagodzinski.bcm;
 
 import com.github.stevejagodzinski.bcm.transformers.httpservlet.HttpRequestTransformer;
+import com.github.stevejagodzinski.bcm.transformers.httpservlet.HttpRequestTransformerFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -49,6 +50,6 @@ public class JavaAgent {
 
     private static void install(String agentArgs, Instrumentation instrumentation) {
         LOG.info("Starting the agent with arguments {}", agentArgs);
-        instrumentation.addTransformer(new HttpRequestTransformer(), true);
+        instrumentation.addTransformer(HttpRequestTransformerFactory.newInstance(), true);
     }
 }
