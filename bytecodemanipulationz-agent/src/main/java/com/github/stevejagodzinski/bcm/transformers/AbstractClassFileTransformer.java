@@ -13,7 +13,7 @@ import java.io.IOException;
 import java.lang.instrument.ClassFileTransformer;
 import java.security.ProtectionDomain;
 
-abstract class AbstractClassFileTransformer implements ClassFileTransformer {
+public abstract class AbstractClassFileTransformer implements ClassFileTransformer {
     private static final Logger LOG = LoggerFactory.getLogger(AbstractClassFileTransformer.class);
 
     private static final ClassPool pool = ClassPool.getDefault();

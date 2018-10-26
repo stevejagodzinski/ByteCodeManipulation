@@ -1,6 +1,6 @@
 package com.github.stevejagodzinski.bcm;
 
-import com.github.stevejagodzinski.bcm.transformers.HttpRequestTransformer;
+import com.github.stevejagodzinski.bcm.transformers.httpservlet.HttpRequestTransformer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -38,7 +38,7 @@ public class JavaAgent {
                     LOG.error("Could not re-transform class {}", clazz, e);
                 }
             } else {
-                LOG.debug("Not re-transforming class {}", clazz);
+                LOG.trace("Not re-transforming class {}", clazz);
             }
         }
     }
