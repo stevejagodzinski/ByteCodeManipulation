@@ -1,17 +1,18 @@
 package com.github.stevejagodzinski.bcm.transformers;
 
+import java.io.IOException;
+import java.lang.instrument.ClassFileTransformer;
+import java.security.ProtectionDomain;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.github.stevejagodzinski.bcm.clazz.ClassNameConverter;
 import javassist.CannotCompileException;
 import javassist.ClassPool;
 import javassist.CtClass;
 import javassist.LoaderClassPath;
 import javassist.NotFoundException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import java.io.IOException;
-import java.lang.instrument.ClassFileTransformer;
-import java.security.ProtectionDomain;
 
 public abstract class AbstractClassFileTransformer implements ClassFileTransformer {
     private static final Logger LOG = LoggerFactory.getLogger(AbstractClassFileTransformer.class);
@@ -36,7 +37,7 @@ public abstract class AbstractClassFileTransformer implements ClassFileTransform
 
                 if (!ctClass.isFrozen()) {
                     LOG.info("Instrumenting the {} class", className);
-                    transformCtClass(ctClass);
+                    transformCtClass(ctClass, pool);
                     transformed = ctClass.toBytecode();
                 } else {
                     LOG.error("Class has already been loaded or written out and thus it cannot be modified any more. className={}", className);
@@ -50,7 +51,7 @@ public abstract class AbstractClassFileTransformer implements ClassFileTransform
         return transformed;
     }
 
-    protected abstract void transformCtClass(CtClass ctClass) throws NoSuchMethodException, CannotCompileException;
+    protected abstract void transformCtClass(CtClass ctClass, ClassPool classPool) throws NoSuchMethodException, CannotCompileException, NotFoundException;
 
     private ClassLoader getClassLoader() {
         ClassLoader contextClassLoader = Thread.currentThread().getContextClassLoader();

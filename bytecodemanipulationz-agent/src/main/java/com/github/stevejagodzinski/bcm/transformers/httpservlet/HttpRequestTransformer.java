@@ -1,14 +1,16 @@
 package com.github.stevejagodzinski.bcm.transformers.httpservlet;
 
+import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
+
 import com.github.stevejagodzinski.bcm.clazz.ClassNameConverter;
 import com.github.stevejagodzinski.bcm.transformers.AbstractClassFileTransformer;
 import javassist.CannotCompileException;
+import javassist.ClassPool;
 import javassist.CtClass;
 import javassist.CtMethod;
+import javassist.NotFoundException;
 import javassist.bytecode.AccessFlag;
-
-import java.util.List;
-import java.util.concurrent.CopyOnWriteArrayList;
 
 public class HttpRequestTransformer extends AbstractClassFileTransformer {
 
@@ -26,9 +28,9 @@ public class HttpRequestTransformer extends AbstractClassFileTransformer {
     }
 
     @Override
-    protected void transformCtClass(CtClass ctClass) throws NoSuchMethodException, CannotCompileException {
+    protected void transformCtClass(CtClass ctClass, ClassPool classPool) throws NoSuchMethodException, CannotCompileException, NotFoundException {
         CtMethod serviceMethod = findServiceMethod(ctClass);
-        transformServiceMethod(serviceMethod);
+        transformServiceMethod(serviceMethod, classPool);
     }
 
     private CtMethod findServiceMethod(CtClass httpServletClass) throws NoSuchMethodException {
@@ -41,14 +43,23 @@ public class HttpRequestTransformer extends AbstractClassFileTransformer {
         throw new NoSuchMethodException("Can not find a method named 'service' with 'protected' access in class " + httpServletClass);
     }
 
-    private void transformServiceMethod(CtMethod serviceMethod) throws CannotCompileException {
+    private void transformServiceMethod(CtMethod serviceMethod, ClassPool classPool) throws CannotCompileException, NotFoundException {
+        addLocalVariables(serviceMethod, classPool);
         insertCodeBeforeServiceMethod(serviceMethod);
         insertCodeAfterServiceMethod(serviceMethod);
     }
 
+    private void addLocalVariables(CtMethod serviceMethod, ClassPool classPool) throws CannotCompileException, NotFoundException {
+        addLocalRequestIdVariable(serviceMethod, classPool);
+
+        for (HttpRequestWrapper wrapper : this.httpRequestWrappers) {
+            wrapper.addLocalVariables(serviceMethod, classPool);
+        }
+    }
+
     private void insertCodeBeforeServiceMethod(CtMethod serviceMethod) throws CannotCompileException {
         StringBuilder code = new StringBuilder();
-        addLocalRequestIdVariable(code);
+        initializeLocalRequestIdVariable(code);
         this.httpRequestWrappers.forEach(w -> w.insertBefore(code));
         serviceMethod.insertBefore(code.toString());
     }
@@ -59,7 +70,12 @@ public class HttpRequestTransformer extends AbstractClassFileTransformer {
         serviceMethod.insertAfter(code.toString());
     }
 
-    private void addLocalRequestIdVariable(StringBuilder code) {
-        code.append("java.util.UUID requestId = java.util.UUID.randomUUID();");
+    private void addLocalRequestIdVariable(CtMethod serviceMethod, ClassPool classPool) throws NotFoundException, CannotCompileException {
+        CtClass ctUuidClass = classPool.get("java.util.UUID");
+        serviceMethod.addLocalVariable("requestId", ctUuidClass);
+    }
+
+    private void initializeLocalRequestIdVariable(StringBuilder code) {
+        code.append("requestId = java.util.UUID.randomUUID();");
     }
 }

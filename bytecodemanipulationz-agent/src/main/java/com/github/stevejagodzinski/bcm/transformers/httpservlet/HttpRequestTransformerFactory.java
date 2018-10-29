@@ -9,6 +9,7 @@ public class HttpRequestTransformerFactory {
     public static HttpRequestTransformer newInstance() {
         HttpRequestTransformer transformer = new HttpRequestTransformer();
         transformer.addHttpRequestWrapper(AddRequestIdHeader.INSTANCE);
+        transformer.addHttpRequestWrapper(TimeRequestFromStartToFinish.INSTANCE);
         return transformer;
     }
 }
