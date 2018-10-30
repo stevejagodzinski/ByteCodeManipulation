@@ -13,13 +13,13 @@ public class TimeRequestFromStartToFinish extends DefaultHttpRequestWrapper {
 
    @Override
    public void addLocalVariables(CtMethod serviceMethod, ClassPool classPool) throws NotFoundException, CannotCompileException {
-      CtClass requestTimeCtClass = classPool.getCtClass("com.github.stevejagodzinski.bcm.data.RequestTimer");
+      CtClass requestTimeCtClass = classPool.getCtClass("com.github.stevejagodzinski.bcm.time.RequestTimer");
       serviceMethod.addLocalVariable("requestTimes", requestTimeCtClass);
    }
 
    @Override
    public void insertBefore(StringBuilder code) {
-      code.append("requestTimes = new com.github.stevejagodzinski.bcm.data.RequestTimer(requestId);");
+      code.append("requestTimes = new com.github.stevejagodzinski.bcm.time.RequestTimer(requestId);");
    }
 
    @Override
