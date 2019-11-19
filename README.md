@@ -4,6 +4,8 @@
 
 ## What is here?
 
+Some code I wrote for a job interview to demonstrate Java byte code manipulation.
+
 ###### Done:
 * A Java Agent
   * Performs the following instrumentations when an HTTP request occurs:
